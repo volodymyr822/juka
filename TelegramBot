@@ -1,0 +1,32 @@
+function sendTelegramMessage(message) {
+    var telegramToken = "AAFXxGZvUVw4iYlrrNUc-5pRQwY9QL7XS7GI"; // Токен вашого бота
+    var chatId = "7221940137"; // Ідентифікатор чату або користувача
+    var url = "https://api.telegram.org/bot" + telegramToken + "/sendMessage";
+
+    var payload = {
+        "chat_id": chatId,
+        "text": message
+    };
+
+    var options = {
+        "method": "post",
+        "payload": payload
+    };
+
+    UrlFetchApp.fetch(url, options);
+}
+
+function notifyNextDepartment() {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+    var lastRow = sheet.getLastRow();
+
+    for (var i = 3; i <= lastRow; i++) {
+        var status = sheet.getRange(i, 20).getValue();
+        var nextDepartment = sheet.getRange(i, 21).getValue();
+
+        if (status == "Готово") {
+            var message = "Деталь з рядка " + i + " готова. Ви можете починати роботу.";
+            sendTelegramMessage(message);
+        }
+    }
+}
