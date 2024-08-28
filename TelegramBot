@@ -17,7 +17,7 @@ function sendTelegramMessage(message) {
 }
 
 function notifyNextDepartment() {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Деталіровка");
     var lastRow = sheet.getLastRow();
 
     for (var i = 3; i <= lastRow; i++) {
